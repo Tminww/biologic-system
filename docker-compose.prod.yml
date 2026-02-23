@@ -28,7 +28,8 @@ services:
       context: ./backend
       dockerfile: Dockerfile
       target: prod
-    image: biologic-prod-api:latest
+    image: ghcr.io/tminww/biologic-prod-api:latest
+
     depends_on:
       biologic-db:
         condition: service_healthy
@@ -43,7 +44,8 @@ services:
       context: ./backend
       dockerfile: Dockerfile
       target: prod
-    image: biologic-prod-api:latest
+    image: ghcr.io/tminww/biologic-prod-api:latest
+
     restart: unless-stopped
     ports:
       - "127.0.0.1:8080:8080"
@@ -74,7 +76,7 @@ services:
       context: ./frontend
       dockerfile: Dockerfile
       target: prod
-    image: biologic-prod-frontend:latest
+    image: ghcr.io/tminww/biologic-prod-frontend:latest
     restart: unless-stopped
     ports:
       - "127.0.0.1:5173:5173"
@@ -96,7 +98,7 @@ services:
       context: ./docs-site
       dockerfile: Dockerfile
       target: prod
-    image: biologic-prod-docs:latest
+    image: ghcr.io/tminww/biologic-prod-docs:latest
     restart: unless-stopped
     ports:
       - "127.0.0.1:3000:3000"

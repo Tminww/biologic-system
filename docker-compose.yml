@@ -1,0 +1,127 @@
+services:
+  biologic-dev-db:
+    container_name: biologic-dev-db
+    image: postgres:15-alpine
+    restart: unless-stopped
+    command:
+      [
+        "postgres",
+        "-c",
+        "shared_buffers=${PG_SHARED_BUFFERS:-128MB}",
+        "-c",
+        "effective_cache_size=${PG_EFFECTIVE_CACHE_SIZE:-1GB}",
+        "-c",
+        "track_io_timing=on",
+      ]
+    ports:
+      - "127.0.0.1:5432:5432"
+    environment:
+      POSTGRES_USER: biologic
+      POSTGRES_PASSWORD: biologic
+      POSTGRES_DB: biologic
+    volumes:
+      - biologic-dev-db-data:/var/lib/postgresql/data
+    healthcheck:
+      test:
+        [
+          "CMD-SHELL",
+          "pg_isready -h 127.0.0.1 -p 5432 -U biologic -d biologic",
+        ]
+      interval: 10s
+      timeout: 5s
+      retries: 10
+      start_period: 60s
+
+  biologic-dev-migrations:
+    container_name: biologic-dev-migrations
+    build:
+      context: ./backend
+      dockerfile: Dockerfile
+      target: prod
+    image: biologic-prod-api:latest
+    depends_on:
+      biologic-dev-db:
+        condition: service_healthy
+    environment:
+      APP_DATABASE_URL: postgresql+asyncpg://biologic:biologic@biologic-dev-db:5432/biologic
+      APP_ALEMBIC_DATABASE_URL: postgresql+asyncpg://biologic:biologic@biologic-dev-db:5432/biologic
+    command: ["alembic", "upgrade", "head"]
+
+  biologic-dev-api:
+    container_name: biologic-dev-api
+    build:
+      context: ./backend
+      dockerfile: Dockerfile
+      target: dev
+    image: biologic-dev-api:latest
+    restart: unless-stopped
+    ports:
+      - "127.0.0.1:8080:8080"
+    environment:
+      APP_DATABASE_URL: postgresql+asyncpg://biologic:biologic@biologic-dev-db:5432/biologic
+      APP_ALEMBIC_DATABASE_URL: postgresql+asyncpg://biologic:biologic@biologic-dev-db:5432/biologic
+      WATCHFILES_FORCE_POLLING: "${WATCHFILES_FORCE_POLLING:-false}"
+    volumes:
+      - ./backend/src:/app/src:z
+      - ./backend/alembic:/app/alembic:z
+      - ./backend/alembic.ini:/app/alembic.ini:z
+      - ./backend/pyproject.toml:/app/pyproject.toml:z
+      - ./backend/uv.lock:/app/uv.lock:z
+    depends_on:
+      biologic-dev-db:
+        condition: service_healthy
+      biologic-dev-migrations:
+        condition: service_completed_successfully
+    healthcheck:
+      test:
+        [
+          "CMD",
+          "python",
+          "-c",
+          "import urllib.request; urllib.request.urlopen('http://127.0.0.1:8080/api/v1/health')",
+        ]
+      interval: 30s
+      timeout: 20s
+      retries: 3
+      start_period: 10s
+
+  biologic-dev-frontend:
+    container_name: biologic-dev-frontend
+    build:
+      context: ./frontend
+      dockerfile: Dockerfile
+      target: dev
+    image: biologic-dev-frontend:latest
+    restart: unless-stopped
+    ports:
+      - "127.0.0.1:5173:5173"
+    environment:
+      VITE_API_MODE: "${VITE_API_MODE:-live}"
+      VITE_API_BASE_URL: "${VITE_API_BASE_URL:-http://localhost:8080}"
+      VITE_API_PREFIX: "${VITE_API_PREFIX:-/api/v1}"
+      VITE_API_REQUEST_CASE: "${VITE_API_REQUEST_CASE:-snake}"
+      VITE_API_SUPPORTS_FILTERS: "${VITE_API_SUPPORTS_FILTERS:-false}"
+      VITE_AUTH_MODE: "${VITE_AUTH_MODE:-mock}"
+    volumes:
+      - ./frontend:/app:z
+      - /app/node_modules
+    depends_on:
+      biologic-dev-api:
+        condition: service_healthy
+
+  biologic-dev-docs:
+    container_name: biologic-dev-docs
+    build:
+      context: ./docs-site
+      dockerfile: Dockerfile
+      target: dev
+    image: biologic-dev-docs:latest
+    restart: unless-stopped
+    ports:
+      - "127.0.0.1:3000:3000"
+    volumes:
+      - ./docs-site:/app:z
+      - /app/node_modules
+
+volumes:
+  biologic-dev-db-data:

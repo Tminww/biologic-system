@@ -1,0 +1,101 @@
+[
+	{
+		"id": 1,
+		"name": "полн. ан.",
+		"comment": "",
+		"user_id": null,
+		"created": "2021-01-21 16:39:44+00",
+		"modified": "2021-01-21 16:44:29+00",
+		"deleted": false
+	},
+	{
+		"id": 2,
+		"name": "бак",
+		"comment": "",
+		"user_id": null,
+		"created": "2021-01-21 16:43:03+00",
+		"modified": "2021-01-21 16:43:03+00",
+		"deleted": false
+	},
+	{
+		"id": 3,
+		"name": "т/х",
+		"comment": "",
+		"user_id": null,
+		"created": "2021-01-21 16:46:20+00",
+		"modified": "2021-01-21 16:46:20+00",
+		"deleted": false
+	},
+	{
+		"id": 4,
+		"name": "т/б",
+		"comment": "",
+		"user_id": null,
+		"created": "2021-01-21 16:46:27+00",
+		"modified": "2021-01-21 16:46:27+00",
+		"deleted": false
+	},
+	{
+		"id": 5,
+		"name": "РВ",
+		"comment": "",
+		"user_id": null,
+		"created": "2021-01-21 16:46:34+00",
+		"modified": "2021-01-21 16:46:34+00",
+		"deleted": false
+	},
+	{
+		"id": 6,
+		"name": "нитраты",
+		"comment": "",
+		"user_id": null,
+		"created": "2021-01-21 16:46:42+00",
+		"modified": "2021-01-21 16:46:42+00",
+		"deleted": false
+	},
+	{
+		"id": 7,
+		"name": "ПЦР",
+		"comment": "",
+		"user_id": null,
+		"created": "2021-01-21 16:46:51+00",
+		"modified": "2021-01-21 16:46:51+00",
+		"deleted": false
+	},
+	{
+		"id": 8,
+		"name": "Hg",
+		"comment": "",
+		"user_id": null,
+		"created": "2021-01-21 16:46:57+00",
+		"modified": "2021-01-21 16:46:57+00",
+		"deleted": false
+	},
+	{
+		"id": 9,
+		"name": "экспресс",
+		"comment": "",
+		"user_id": null,
+		"created": "2021-01-21 16:47:05+00",
+		"modified": "2021-01-21 16:47:05+00",
+		"deleted": false
+	},
+	{
+		"id": 10,
+		"name": "б/бак",
+		"comment": "",
+		"user_id": null,
+		"created": "2021-01-22 16:23:28+00",
+		"modified": "2021-01-22 16:23:28+00",
+		"deleted": false
+	},
+	{
+		"id": 11,
+		"name": "As",
+		"comment": "",
+		"user_id": null,
+		"created": "2021-05-12 14:36:48+00",
+		"modified": "2021-05-12 14:36:48+00",
+		"deleted": false
+	}
+]

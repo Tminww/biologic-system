@@ -1,0 +1,37 @@
+import { test, expect } from '@playwright/test'
+import { attachPageErrors, login } from './helpers'
+
+test('objects actions are compact and dialog uses edit/save toggle', async ({ page }) => {
+  attachPageErrors(page)
+  await login(page, 'admin@example.com', 'admin123')
+  await page.goto('/objects')
+  await expect(page.getByRole('heading', { name: 'Объекты' })).toBeVisible()
+  const rowActions = page.locator('.row-actions').first()
+  await expect(rowActions.locator('button')).toHaveCount(2)
+  await rowActions.getByRole('button', { name: 'Действия' }).click()
+  const dialog = page.getByRole('dialog')
+  await expect(dialog).toBeVisible()
+  const editButton = dialog.getByRole('button', { name: 'Редактировать' })
+  await expect(editButton).toBeVisible()
+  await expect(dialog.getByRole('button', { name: 'Удалить' })).toHaveCount(0)
+  await editButton.click()
+  await expect(dialog.getByRole('button', { name: 'Сохранить' })).toBeVisible()
+})
+
+test('users dialog shows permissions and edit/save toggle', async ({ page }) => {
+  attachPageErrors(page)
+  await login(page, 'admin@example.com', 'admin123')
+  await page.goto('/admin/users')
+  await expect(page.getByRole('heading', { name: 'Пользователи' })).toBeVisible()
+  const rowActions = page.locator('.row-actions').first()
+  await expect(rowActions.locator('button')).toHaveCount(2)
+  await rowActions.getByRole('button', { name: 'Действия' }).click()
+  const dialog = page.getByRole('dialog')
+  await expect(dialog).toBeVisible()
+  const editButton = dialog.getByRole('button', { name: 'Редактировать' })
+  await expect(editButton).toBeVisible()
+  await expect(dialog.getByRole('button', { name: 'Удалить' })).toHaveCount(0)
+  await expect(dialog.getByRole('tab', { name: 'Права' })).toBeVisible()
+  await editButton.click()
+  await expect(dialog.getByRole('button', { name: 'Сохранить' })).toBeVisible()
+})

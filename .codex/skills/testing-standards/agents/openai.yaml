@@ -1,0 +1,4 @@
+interface:
+  display_name: "Testing Standards"
+  short_description: "Enforce pytest quality gates, strict typing, and coverage rules."
+  default_prompt: "Design and evaluate tests for services, repositories, and API with target coverage and quality gates."

@@ -1,0 +1,4 @@
+interface:
+  display_name: "Docs and ADR Writer"
+  short_description: "Keep Zudoku docs and ADR records aligned with architecture decisions."
+  default_prompt: "Update docs and ADR files with md-first rules for architecture, API contracts, and operational standards."

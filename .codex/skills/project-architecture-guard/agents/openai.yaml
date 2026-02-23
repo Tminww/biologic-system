@@ -1,0 +1,4 @@
+interface:
+  display_name: "Project Architecture Guard"
+  short_description: "Enforce layered architecture and dependency boundaries."
+  default_prompt: "Review proposed changes for layer boundary, DI, and async rule violations and propose concrete fixes."

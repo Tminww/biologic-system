@@ -1,0 +1,4 @@
+interface:
+  display_name: "FastAPI CRUD Pattern"
+  short_description: "Implement consistent CRUD with filters and pagination."
+  default_prompt: "Implement or review FastAPI CRUD modules using shared patterns for schemas, services, repositories, and list contracts."

@@ -41,11 +41,11 @@ npm run test:e2e
 
 ## Configuration
 
-- `VITE_API_MODE` (default: `mock`)
-  - `mock` uses the in-app mock API.
-  - `live` sends requests to `VITE_API_BASE_URL`.
 - `VITE_API_BASE_URL` (default: empty string)
   - Example: `https://api.example.com`
+- `VITE_API_PREFIX` (default: `/api/v1`)
+- `VITE_API_REQUEST_CASE` (default: `snake`)
+- `VITE_API_SUPPORTS_FILTERS` (`true|false`)
 - Locale: stored in `localStorage` as `app_locale` (`ru` default, `en` available).
 
 ## Permissions
@@ -65,13 +65,14 @@ Use URL hashes to open dialogs or the filters panel programmatically.
 - Filters panel with preset: `/objects#filters=My%20Preset`
 - Legacy dialog hashes still work: `/objects#edit-123`, `/objects#edit:123`
 
-## Mock Mode
+## Backend Mock Auth Mode
 
-- Login:
-  - `admin` / `admin123`
-  - `doctor` / `doctor123`
-  - `tech` / `tech123`
-- Mock data supports pagination, filtering, sorting, and optimistic updates.
+Frontend does not contain local API/auth mocks.  
+For demo auth via backend JWT cookies, run backend with `APP_AUTH_MODE=mock` and use:
+
+- `admin` / `admin123`
+- `doctor` / `doctor123`
+- `tech` / `tech123`
 
 ## Adding a New CRUD Module
 

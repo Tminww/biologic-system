@@ -1,10 +1,12 @@
 # Troubleshooting
 
-## Не проходит логин в mock
+## Не проходит логин
 
-Проверьте, что логин передается как `login`, а не `email`.
+- Проверьте, что frontend отправляет payload `username/password`
+- Проверьте, что backend доступен по `VITE_API_BASE_URL` и использует `HttpOnly` cookies
+- Для demo-режима включите `APP_AUTH_MODE=mock`
 
-Рабочие пары:
+Рабочие пары для backend mock:
 
 - `admin/admin123`
 - `doctor/doctor123`
@@ -67,17 +69,11 @@
 - открыть запись повторно
 - повторить сохранение
 
-## Приложение ведет себя странно в mock режиме
+## Приложение возвращает на /login после входа
 
-Сбросьте localStorage ключи mock:
-
-- `mock_users_v3`
-- `mock_objects_v3`
-- `mock_overrides_v3`
-- `mock_session_user_v3`
-- `mock_catalogs_v3`
-- `mock_role_permissions_v3`
-- `mock_quick_actions_v1`
+- Проверьте, что backend отвечает на `GET /api/v1/auth/me` с cookie
+- Проверьте CORS: `allow_credentials=true` и корректный origin фронтенда
+- Проверьте cookie flags (`SameSite`, `Secure`, `Path`, `Domain`) для вашего окружения
 
 ## VitePress не запускается
 

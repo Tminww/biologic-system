@@ -63,13 +63,11 @@
 - `src/shared/i18n/messages.ts`: добавить `resource.<name>` и связанные тексты
 - при необходимости добавить роль/override поведение в backend/mock
 
-## Шаг 7. Поддержать mock
+## Шаг 7. Синхронизировать backend контракт
 
-В `src/shared/api/mock.ts`:
-
-- добавить каталог в `catalogMap`
-- добавить seed-data или трансформер
-- обеспечить permission check для endpoint'ов
+- добавить/обновить endpoint'ы на backend по канону `/api/v1`
+- синхронизировать `resource/action` для RBAC в `/auth/me`
+- при необходимости добавить backend mock-данные, но не фронтовые моки
 
 ## Шаг 8. Добавить документацию и тесты
 

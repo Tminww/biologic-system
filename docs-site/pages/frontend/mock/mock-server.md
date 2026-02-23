@@ -1,64 +1,29 @@
-# Mock server
+# Backend Mock Auth
 
-## Где реализован
+Frontend не содержит локального mock API и не мокает auth.
 
-- `src/shared/api/mock.ts`
-- данные seed: `src/shared/api/mock-data/*.json`
+## Где включается
 
-## Как включается
+Backend (`src/core/config.py`):
 
-В `src/shared/api/client.ts`:
+- `APP_AUTH_MODE=mock`
 
-- если `VITE_API_MODE !== 'live'`, используется `mockFetch`
+## Что остается каноничным
 
-## Что поддерживает mock
+- JWT transport через `HttpOnly` cookies
+- `POST /api/v1/auth/login`
+- `GET /api/v1/auth/me`
+- `POST /api/v1/auth/refresh`
+- `POST /api/v1/auth/logout`
+- frontend отправляет `credentials: 'include'`
 
-- session auth
-- role permissions
-- user overrides
-- server-side фильтрация, сортировка и пагинация
-- CRUD для объектов, пользователей и каталогов
-- quick actions dashboard
-- дополнительные endpoint'ы (`/directions/import`, `/samples/protocol`)
-
-## Тестовые пользователи
+## Тестовые пользователи (backend mock)
 
 - `admin` / `admin123`
 - `doctor` / `doctor123`
 - `tech` / `tech123`
 
-## RBAC в mock
+## Ограничения
 
-- базовые права роли задаются в `rolePermissions`
-- персональные overrides хранятся отдельно
-- effective permissions вычисляются функцией `computeEffectivePermissions()`
-
-## Персистентность
-
-Mock хранит состояние в `localStorage`.
-
-Основные ключи:
-
-- `mock_users_v3`
-- `mock_objects_v3`
-- `mock_overrides_v3`
-- `mock_session_user_v3`
-- `mock_catalogs_v3`
-- `mock_role_permissions_v3`
-- `mock_quick_actions_v1`
-
-Это позволяет сохранять изменения между перезагрузками браузера.
-
-## Сброс состояния mock
-
-Варианты:
-
-1. Очистить соответствующие ключи вручную в DevTools
-2. Выполнить `localStorage.clear()` в консоли браузера
-3. Перезапустить приложение и войти заново
-
-## Ограничения mock
-
-- Нет реальной серверной валидации бизнес-правил в полном объеме
-- Нет транзакций и конкурентного доступа как в production DB
-- Форматы некоторых payload'ов либеральнее, чем на реальном backend
+- Mock только для auth слоя
+- Данные CRUD-эндпойнтов по-прежнему берутся из backend источников данных

@@ -8,13 +8,10 @@ import type {
   ReadResponse,
   UpdateResponse
 } from '@/shared/types/api'
-import { mockFetch } from './mock'
 
 const apiBaseUrl = import.meta.env.VITE_API_BASE_URL || ''
-const apiMode = import.meta.env.VITE_API_MODE || 'mock'
-const useMock = apiMode !== 'live'
 const apiPrefixRaw = import.meta.env.VITE_API_PREFIX || '/api/v1'
-const requestCaseMode = import.meta.env.VITE_API_REQUEST_CASE || (useMock ? 'none' : 'snake')
+const requestCaseMode = import.meta.env.VITE_API_REQUEST_CASE || 'snake'
 const useSnakeCaseRequests = requestCaseMode === 'snake'
 
 const normalizePrefix = (value: string) => {
@@ -95,7 +92,7 @@ const buildUrl = (path: string, params?: Record<string, any>) => {
   const isAbsolute = /^https?:\/\//i.test(path)
   const normalizedPath = path.startsWith('/') ? path : `/${path}`
   const withPrefix =
-    !useMock && apiPrefix && !isAbsolute && !normalizedPath.startsWith(`${apiPrefix}/`)
+    apiPrefix && !isAbsolute && !normalizedPath.startsWith(`${apiPrefix}/`)
       ? `${apiPrefix}${normalizedPath}`
       : path
   const url = new URL(withPrefix, apiBaseUrl || window.location.origin)
@@ -143,7 +140,7 @@ export const apiRequest = async <T>(
     init.body = isFormData ? requestBody : JSON.stringify(requestBody)
   }
 
-  const response = useMock ? await mockFetch(url, init) : await fetch(url, init)
+  const response = await fetch(url, init)
 
   if (!response.ok) {
     const payload = await parseResponse(response)

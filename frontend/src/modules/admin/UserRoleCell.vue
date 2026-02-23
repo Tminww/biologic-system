@@ -51,20 +51,7 @@ const overridesCount = computed(() => {
   if (typeof props.row.overridesCount === 'number') {
     return props.row.overridesCount
   }
-  if (typeof window === 'undefined') {
-    return 0
-  }
-  try {
-    const raw = window.localStorage.getItem('mock_overrides_v3')
-    if (!raw) {
-      return 0
-    }
-    const parsed = JSON.parse(raw) as Record<string, unknown[]>
-    const list = parsed[String(props.row.id)]
-    return Array.isArray(list) ? list.length : 0
-  } catch {
-    return 0
-  }
+  return 0
 })
 </script>
 

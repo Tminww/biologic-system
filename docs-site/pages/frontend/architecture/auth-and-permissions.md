@@ -1,13 +1,14 @@
 # Auth и RBAC
 
-## Сессионная авторизация
+## JWT в HttpOnly cookies
 
-Auth слой основан на backend-сессии.
+Auth слой основан на backend JWT flow с cookie transport.
 
 Endpoints:
 
 - `POST /auth/login`
 - `GET /auth/me`
+- `POST /auth/refresh`
 - `POST /auth/logout`
 
 Клиент всегда отправляет `credentials: 'include'` (см. `src/shared/api/client.ts`).
@@ -33,7 +34,7 @@ Actions:
 - `logoutLocal()`
 - `can(resource, action)`
 
-Effective permissions приходят от backend (или mock) уже с учетом роли и overrides.
+Effective permissions приходят от backend в `/auth/me`.
 
 ## Модель прав
 
@@ -75,4 +76,4 @@ Effective permissions приходят от backend (или mock) уже с уч
 
 - Роль хранит базовые permissions
 - Пользователь может иметь overrides поверх роли
-- В mock и в целевом backend overrides имеют приоритет над ролью
+- Overrides имеют приоритет над ролью

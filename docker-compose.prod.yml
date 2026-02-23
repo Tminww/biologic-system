@@ -36,6 +36,7 @@ services:
     environment:
       APP_DATABASE_URL: postgresql+asyncpg://biologic:biologic@biologic-db:5432/biologic
       APP_ALEMBIC_DATABASE_URL: postgresql+asyncpg://biologic:biologic@biologic-db:5432/biologic
+      APP_AUTH_MODE: "${APP_AUTH_MODE:-mock}"
     command: ["alembic", "upgrade", "head"]
 
   biologic-api:
@@ -52,6 +53,7 @@ services:
     environment:
       APP_DATABASE_URL: postgresql+asyncpg://biologic:biologic@biologic-db:5432/biologic
       APP_ALEMBIC_DATABASE_URL: postgresql+asyncpg://biologic:biologic@biologic-db:5432/biologic
+      APP_AUTH_MODE: "${APP_AUTH_MODE:-mock}"
     depends_on:
       biologic-db:
         condition: service_healthy
@@ -81,13 +83,11 @@ services:
     ports:
       - "127.0.0.1:5173:80"
     environment:
-      VITE_API_MODE: "${VITE_API_MODE:-live}"
       VITE_API_BASE_URL: "${VITE_API_BASE_URL:-https://api.bio.tminww.space}"
       VITE_DOCS_URL: "${VITE_DOCS_URL:-https://docs.bio.tminww.space}"
       VITE_API_PREFIX: "${VITE_API_PREFIX:-/api/v1}"
       VITE_API_REQUEST_CASE: "${VITE_API_REQUEST_CASE:-snake}"
       VITE_API_SUPPORTS_FILTERS: "${VITE_API_SUPPORTS_FILTERS:-false}"
-      VITE_AUTH_MODE: "${VITE_AUTH_MODE:-mock}"
 
     depends_on:
       biologic-api:

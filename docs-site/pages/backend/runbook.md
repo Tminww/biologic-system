@@ -43,6 +43,16 @@ curl -i -X POST http://127.0.0.1:8000/api/v1/auth/login \
   -d '{"username":"admin","password":"admin123"}'
 ```
 
+## Backend mock auth режим
+
+Для демонстрационного входа без БД-пользователей можно включить:
+
+```bash
+APP_AUTH_MODE=mock
+```
+
+В этом режиме сохраняется тот же JWT-cookie контракт (`login/me/refresh/logout`), но учетные записи берутся из mock-auth сервиса.
+
 ## Проверки качества
 
 ```bash

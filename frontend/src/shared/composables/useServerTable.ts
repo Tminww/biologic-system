@@ -4,9 +4,8 @@ import type { InjectionKey } from 'vue'
 import type { ReadListResponse } from '@/shared/types/api'
 import type { TableFilters } from '@/shared/types/table'
 
-const apiMode = import.meta.env.VITE_API_MODE || 'mock'
 const filtersModeEnv = import.meta.env.VITE_API_SUPPORTS_FILTERS
-const apiSupportsFilters = filtersModeEnv ? filtersModeEnv === 'true' : apiMode !== 'live'
+const apiSupportsFilters = filtersModeEnv ? filtersModeEnv === 'true' : true
 
 export interface ServerTableOptions {
   initialPageSize?: number

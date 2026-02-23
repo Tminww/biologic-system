@@ -6,14 +6,14 @@
 
 - SPA на Vue 3 + Vite + TypeScript + Pinia + Vue Router
 - PrimeVue 4 (Aura), PrimeIcons, централизованные `Toast` и `ConfirmDialog`
-- Session-based auth (`/auth/login`, `/auth/me`, `/auth/logout`)
+- JWT cookie auth (`/auth/login`, `/auth/me`, `/auth/refresh`, `/auth/logout`)
 - RBAC с эффективными правами и user overrides
 - Единый CRUD-пайплайн:
   - `BaseTable` + `useServerTable`
   - `BaseDialog` + `useCrudDialog`
   - `useOptimistic` + `useConfirmDelete`
   - `useDialogHash` + `useTableHash`
-- Mock API режим по умолчанию для локальной разработки
+- Frontend без локального mock API, весь трафик идет в backend
 
 ## Карта основных маршрутов
 
@@ -38,17 +38,12 @@ Protected:
   - `401` -> `logoutLocal()` и переход на `/login`
   - `403` -> toast `Недостаточно прав`
 
-## Режимы API
+## API transport
 
-Переменные:
-
-- `VITE_API_MODE=mock|live`
 - `VITE_API_BASE_URL=https://...`
-
-Поведение:
-
-- `mock` (по умолчанию): `src/shared/api/mock.ts`
-- `live`: вызовы реального backend с `credentials: 'include'`
+- `VITE_API_PREFIX=/api/v1`
+- `credentials: 'include'`
+- Для demo auth backend поддерживает `APP_AUTH_MODE=mock`
 
 ## Основные reusable-компоненты
 

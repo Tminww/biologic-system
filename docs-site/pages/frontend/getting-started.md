@@ -12,7 +12,7 @@ npm install
 npm run dev
 ```
 
-По умолчанию приложение запускается в mock-режиме.
+Приложение всегда работает через backend API.
 
 ## Запуск VitePress документации
 
@@ -36,24 +36,20 @@ npx vitepress preview docs
 
 ## Переменные окружения
 
-- `VITE_API_MODE`
-  - `mock` (по умолчанию): запросы идут в локальный mock API
-  - `live`: запросы идут на реальный backend
 - `VITE_API_BASE_URL`
-  - базовый URL backend, используется в `live` режиме
+  - базовый URL backend
 - `VITE_API_PREFIX`
   - префикс API (по умолчанию `/api/v1`)
 - `VITE_API_REQUEST_CASE`
-  - `snake` (по умолчанию для `live`): ключи `params`/`body` конвертируются в `snake_case`
+  - `snake` (по умолчанию): ключи `params`/`body` конвертируются в `snake_case`
   - `none`: без автоматической конвертации ключей
 - `VITE_API_SUPPORTS_FILTERS`
-  - `false` (по умолчанию для `live`): `useServerTable` не отправляет `filters/global`
-  - `true` (по умолчанию для `mock`): отправляются `filters/global` для расширенной фильтрации
+  - `false`: `useServerTable` не отправляет `filters/global`
+  - `true`: отправляются `filters/global` для расширенной фильтрации
 
 Пример `.env` для живого backend:
 
 ```env
-VITE_API_MODE=live
 VITE_API_BASE_URL=https://api.example.com
 VITE_API_PREFIX=/api/v1
 VITE_API_REQUEST_CASE=snake
@@ -66,7 +62,9 @@ VITE_API_SUPPORTS_FILTERS=false
 npm run test:e2e
 ```
 
-## Тестовые учетные записи (mock)
+## Тестовые учетные записи (backend mock auth)
+
+Запустите backend с `APP_AUTH_MODE=mock`.
 
 - `admin` / `admin123`
 - `doctor` / `doctor123`
@@ -77,4 +75,3 @@ npm run test:e2e
 - `app_locale` (`ru` или `en`)
 - `app_theme` (`light` или `dark`)
 - `table-presets:<route>` или явный `presetKey` модуля
-- mock-ключи (`mock_users_v3`, `mock_objects_v3`, `mock_overrides_v3` и др.)

@@ -1,3 +1,10 @@
+---
+icon: lucide/layout-dashboard
+tags:
+  - Frontend
+  - Modules
+---
+
 # Карта модулей
 
 ## Навигационные домены
@@ -48,7 +55,7 @@
 
 - `directions`: импорт файла и генерация протокола
 - `samples`: реестр и генерация протокола по выбранным строкам
-- `dashboard`: quick actions с персональными ссылками
+- `dashboard`: quick actions с настройкой на уровне роли
 - `admin/users`: персональные overrides прав
 - `user-types`: базовые permissions ролей
 

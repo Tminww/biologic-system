@@ -752,6 +752,7 @@ interface ReadListResponse<TReadDTO> {
 
 - `CreateQuickActionDto`, `UpdateQuickActionDto`, `QuickAction` есть в коде.
 - Отдельных `ReadDTO/ReadListDTO` именованных в CRUD-формате нет, список возвращает `ListResponse<QuickAction>`.
+- В backend mock quick-actions хранятся по роли (`role_key`), а не по пользователю.
 
 ## Важные отличия от backend entities
 

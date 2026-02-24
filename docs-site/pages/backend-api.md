@@ -1,3 +1,10 @@
+---
+icon: lucide/server
+tags:
+  - Backend
+  - API
+---
+
 # Канонический backend API
 
 ## 1. Базовый контракт
@@ -18,7 +25,24 @@
 
 Канон transport-поля логина: `username`.
 
-## 3. CRUD паттерн
+## 3. Dashboard quick actions
+
+| Method | Path | Назначение |
+| --- | --- | --- |
+| GET | `/api/v1/dashboard/quick-actions` | Список быстрых действий для текущей роли |
+| POST | `/api/v1/dashboard/quick-actions` | Создать быстрое действие для роли |
+| PUT | `/api/v1/dashboard/quick-actions/{id}` | Изменить быстрое действие для роли |
+| DELETE | `/api/v1/dashboard/quick-actions/{id}` | Удалить быстрое действие для роли |
+
+:::note
+Quick actions в mock-режиме хранятся in-memory на backend и привязаны к `role_key`, а не к `user_id`.
+:::
+
+:::tip
+Для текущего mock-этапа отдельная таблица БД не нужна. Таблица нужна только когда появится требование персистентного администрирования quick actions ролей в live-режиме (с аудитом и миграциями).
+:::
+
+## 4. CRUD паттерн
 
 Для каждой сущности из `docs/database-entities.md` используется единый набор:
 
@@ -57,7 +81,7 @@
 | `user_roles` |
 | `users` |
 
-## 4. Envelope и meta
+## 5. Envelope и meta
 
 ### List
 
@@ -97,14 +121,14 @@
 
 Канонический ключ: `includes_requested`.
 
-## 5. Query contract
+## 6. Query contract
 
 1. Pagination: `offset`, `limit`
 2. Sorting: `sort_by`, `sort_order=asc|desc`
 3. Range filters: `{field}_from`, `{field}_to`
 4. Include: `include=<relation1,relation2>` (только whitelist из OpenAPI)
 
-## 6. Коды ошибок
+## 7. Коды ошибок
 
 1. `401` — неаутентифицированный запрос / невалидные креды.
 2. `403` — недостаточно прав.
@@ -112,7 +136,7 @@
 4. `409` — конфликт версий (`STALE_DATA`).
 5. `422` — валидация payload/query/include.
 
-## 7. Матрица соответствия frontend route -> backend resource
+## 8. Матрица соответствия frontend route -> backend resource
 
 | Frontend route | Backend resource |
 | --- | --- |
@@ -135,7 +159,7 @@
 | `/user-types` | `/api/v1/roles` |
 | `/admin/users` | `/api/v1/users` |
 
-## 8. Подробные источники
+## 9. Подробные источники
 
 - `docs/backend/api-guidelines.md`
 - `docs/backend/dto-contracts.md`

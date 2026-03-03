@@ -30,7 +30,7 @@ tags:
 ## Минимальный порядок генерации
 
 1. Справочники: `branches`, `laboratories`, `roles`, `statuses`, `sample_types`, `protocol_types`, `conclusion_statuses`
-2. Пользователи и права: `users`, `user_roles`, `role_permissions`
+2. Пользователи и права: `users`, `roles`, `permissions`, `role_permissions`, `user_scopes`
 3. Бизнес-контекст: `objects`, `doctors`, `research_goals`, `indicators`
 4. Процессные сущности: `directions`, `samples`, `sample_targets`, `results`, `tests`
 5. Финализация: `conclusions`, `protocols`

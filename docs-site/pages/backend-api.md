@@ -14,6 +14,8 @@ tags:
 3. Auth transport: `HttpOnly` cookies + `credentials: 'include'`
 4. Ошибки: `application/problem+json` (RFC 9457)
 
+---
+
 ## 2. Auth endpoints
 
 | Method | Path | Назначение |
@@ -25,26 +27,27 @@ tags:
 
 Канон transport-поля логина: `username`.
 
-## 3. Dashboard quick actions
+---
 
-| Method | Path | Назначение |
+## 3. Принципы выбора между CRUD и Command
+
+Система использует два паттерна. Критерий выбора:
+
+> Если операция имеет имя, порождает побочные эффекты или затрагивает несколько сущностей одновременно — это **команда**. Если операция — просто сохранение данных без бизнес-логики — это **CRUD**.
+
+| Признак | CRUD | Command |
 | --- | --- | --- |
-| GET | `/api/v1/dashboard/quick-actions` | Список быстрых действий для текущей роли |
-| POST | `/api/v1/dashboard/quick-actions` | Создать быстрое действие для роли |
-| PUT | `/api/v1/dashboard/quick-actions/{id}` | Изменить быстрое действие для роли |
-| DELETE | `/api/v1/dashboard/quick-actions/{id}` | Удалить быстрое действие для роли |
+| Только сохранение данных | ✅ | — |
+| Смена статуса | — | ✅ |
+| Каскадные эффекты на другие сущности | — | ✅ |
+| Вычисляемые поля на сервере | — | ✅ |
+| Уведомления как побочный эффект | — | ✅ |
 
-:::note
-Quick actions в mock-режиме хранятся in-memory на backend и привязаны к `role_key`, а не к `user_id`.
-:::
-
-:::tip
-Для текущего mock-этапа отдельная таблица БД не нужна. Таблица нужна только когда появится требование персистентного администрирования quick actions ролей в live-режиме (с аудитом и миграциями).
-:::
+---
 
 ## 4. CRUD паттерн
 
-Для каждой сущности из `docs/database-entities.md` используется единый набор:
+Для справочников и сущностей без бизнес-логики используется единый набор:
 
 1. `POST /api/v1/{resource}`
 2. `GET /api/v1/{resource}/{id}`
@@ -69,6 +72,7 @@ Quick actions в mock-режиме хранятся in-memory на backend и п
 | `objects` |
 | `protocol_types` |
 | `protocols` |
+| `permissions` |
 | `research_goals` |
 | `results` |
 | `role_permissions` |
@@ -78,10 +82,98 @@ Quick actions в mock-режиме хранятся in-memory на backend и п
 | `samples` |
 | `statuses` |
 | `tests` |
-| `user_roles` |
+| `user_scopes` |
 | `users` |
 
-## 5. Envelope и meta
+:::warning
+`/api/v1/user_roles` удалён из backend-контракта. Используется только `users.role_id` + `user_scopes`.
+:::
+
+:::note
+Смена статуса через `PATCH /samples/:id` или `PATCH /tests/:id` **не допускается**. Для переходов статусов используются команды (см. раздел 5).
+:::
+
+---
+
+## 5. Command паттерн
+
+Команды описывают бизнес-операции с побочными эффектами. Все команды используют `POST` на именованный sub-resource.
+
+### Формат
+
+```
+POST /api/v1/{resource}/{id}/{command}
+```
+
+Тело запроса содержит только данные, необходимые для выполнения команды. Ответ возвращает обновлённую сущность в стандартном envelope `{ "data": {} }`.
+
+### Команды направлений
+
+| Method | Path | Инициатор | Эффект |
+| --- | --- | --- | --- |
+| POST | `/api/v1/directions/{id}/import` | Регистратор | Создаёт направление из файла, статус → `draft` |
+| POST | `/api/v1/directions/{id}/register` | Регистратор | Проставлены типы образцов и лаборатории, статус → `registered` |
+
+### Команды образцов
+
+| Method | Path | Инициатор | Эффект |
+| --- | --- | --- | --- |
+| POST | `/api/v1/samples/{id}/register` | Регистратор | Проставляет `received_at`, вычисляет `deadline`, статус → `registered` |
+| POST | `/api/v1/samples/{id}/reject` | Регистратор / Доктор | Статус → `rejected`; все исследования → `cancelled` с `cancellation_reason = sample_rejected` |
+| POST | `/api/v1/samples/{id}/close` | Начальник лаборатории | Устанавливает `verdict`, статус → `completed`; уведомление НФ если вердикт отрицательный |
+
+### Команды исследований (`results`)
+
+| Method | Path | Инициатор | Эффект |
+| --- | --- | --- | --- |
+| POST | `/api/v1/results/{id}/confirm` | НЛ / Доктор | Статус `draft` → `ordered` |
+| POST | `/api/v1/results/{id}/start` | Доктор | Статус `ordered` → `in_progress` |
+| POST | `/api/v1/results/{id}/reject` | НЛ / Доктор / Регистратор | Статус → `rejected` (терминальный) |
+
+### Команды испытаний (`tests`)
+
+| Method | Path | Инициатор | Эффект |
+| --- | --- | --- | --- |
+| POST | `/api/v1/tests/{id}/start` | Доктор / НЛ | Статус `queued` → `in_progress` |
+| POST | `/api/v1/tests/{id}/complete` | Доктор / НЛ | Вносит результат, статус → `completed`; если все испытания завершены — исследование → `completed`; если все исследования завершены — образец → `analyzed` |
+| POST | `/api/v1/tests/{id}/requeue` | Доктор / НЛ | Статус `in_progress` → `queued` |
+| POST | `/api/v1/tests/{id}/reject` | Доктор / НЛ / Система | Статус → `rejected` (терминальный) |
+
+### Автоматические переходы (инициатор: Система)
+
+Следующие переходы статусов система выполняет сама как каскадный эффект команд выше. Отдельных endpoint-ов для них нет.
+
+| Триггер | Автоматический эффект |
+| --- | --- |
+| Хотя бы один образец → `in_progress` | Направление → `in_progress` |
+| Хотя бы один образец закрыт, но не все | Направление → `partially_completed` |
+| Все образцы закрыты | Направление → `completed` |
+| Все испытания завершены | Исследование → `completed` |
+| Все исследования завершены | Образец → `analyzed` |
+| Назначены новые испытания | Исследование `completed` → `in_progress` |
+
+---
+
+## 6. Dashboard quick actions
+
+| Method | Path | Назначение |
+| --- | --- | --- |
+| GET | `/api/v1/dashboard/quick-actions` | Список быстрых действий для текущей роли |
+| POST | `/api/v1/dashboard/quick-actions` | Создать быстрое действие для роли |
+| PUT | `/api/v1/dashboard/quick-actions/{id}` | Изменить быстрое действие для роли |
+| DELETE | `/api/v1/dashboard/quick-actions/{id}` | Удалить быстрое действие для роли |
+
+:::note
+Quick actions в mock-режиме хранятся in-memory на backend и привязаны к `role_key`, а не к `user_id`.
+:::
+
+:::tip
+Для текущего mock-этапа отдельная таблица БД не нужна. Таблица нужна только когда появится требование персистентного администрирования quick actions ролей в live-режиме (с аудитом и миграциями).
+:::
+
+---
+
+## 7. Envelope и meta
 
 ### List
 
@@ -102,7 +194,7 @@ Quick actions в mock-режиме хранятся in-memory на backend и п
 }
 ```
 
-### Read one
+### Read one / Command response
 
 ```json
 {
@@ -121,22 +213,34 @@ Quick actions в mock-режиме хранятся in-memory на backend и п
 
 Канонический ключ: `includes_requested`.
 
-## 6. Query contract
+---
+
+## 8. Query contract
 
 1. Pagination: `offset`, `limit`
 2. Sorting: `sort_by`, `sort_order=asc|desc`
 3. Range filters: `{field}_from`, `{field}_to`
 4. Include: `include=<relation1,relation2>` (только whitelist из OpenAPI)
 
-## 7. Коды ошибок
+---
 
-1. `401` — неаутентифицированный запрос / невалидные креды.
-2. `403` — недостаточно прав.
-3. `404` — сущность не найдена.
-4. `409` — конфликт версий (`STALE_DATA`).
-5. `422` — валидация payload/query/include.
+## 9. Коды ошибок
 
-## 8. Матрица соответствия frontend route -> backend resource
+| Код | Значение |
+| --- | --- |
+| `401` | Неаутентифицированный запрос / невалидные креды |
+| `403` | Недостаточно прав |
+| `404` | Сущность не найдена |
+| `409` | Конфликт версий (`STALE_DATA`) или недопустимый переход статуса (`INVALID_TRANSITION`) |
+| `422` | Валидация payload / query / include |
+
+:::note
+Попытка выполнить команду при недопустимом текущем статусе возвращает `409` с кодом `INVALID_TRANSITION`, а не `422`.
+:::
+
+---
+
+## 10. Матрица соответствия frontend route → backend resource
 
 | Frontend route | Backend resource |
 | --- | --- |
@@ -157,9 +261,13 @@ Quick actions в mock-режиме хранятся in-memory на backend и п
 | `/protocol-types` | `/api/v1/protocol_types` |
 | `/statuses` | `/api/v1/statuses` |
 | `/user-types` | `/api/v1/roles` |
+| `/permissions` | `/api/v1/permissions` |
+| `/user-scopes` | `/api/v1/user_scopes` |
 | `/admin/users` | `/api/v1/users` |
 
-## 9. Подробные источники
+---
+
+## 11. Подробные источники
 
 - `docs/backend/api-guidelines.md`
 - `docs/backend/dto-contracts.md`

@@ -14,7 +14,7 @@
 | List envelope | `{ items, meta }` | `{ data, meta }` запрещён для новых/обновлённых endpoint |
 | Include meta key | `includes_requested` | `includes_request` читается как alias только на переходный период |
 | Naming в API | `snake_case` transport | camelCase только внутри UI-моделей после преобразования |
-| Role resources | `/roles`, `/role_permissions` | `/user-types` допустим только как UI route alias |
+| Role resources | `/roles`, `/permissions`, `/role_permissions`, `/user_scopes` | `/user-types` допустим только как UI route alias |
 | User permission overrides | `/users/{id}/permissions` считается целевым контрактом | До полной реализации backend endpoint помечается как optional feature flag |
 | Отображение ID в таблицах UI | Frontend не показывает технический `id`/`uuid` как значение колонки, вместо этого рендерит `№ = offset + rowIndex + 1` | `id`/`uuid` остаётся обязательным полем API и используется как технический идентификатор |
 | Общее количество в пагинации UI | Frontend берет общее количество из `meta.total` list-ответа и передает его в PrimeVue `DataTable/Paginator totalRecords` | Локальный расчет total на frontend не используется |

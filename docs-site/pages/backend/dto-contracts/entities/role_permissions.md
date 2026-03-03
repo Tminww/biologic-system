@@ -18,7 +18,7 @@ tags:
 2. `GET /api/v1/role_permissions/{id}`
 3. `GET /api/v1/role_permissions`
 4. `PATCH /api/v1/role_permissions/{id}`
-5. `DELETE /api/v1/role_permissions/{role_id}/{resource}/{action}`
+5. `DELETE /api/v1/role_permissions/{id}`
 
 ## Create DTO
 
@@ -27,8 +27,7 @@ tags:
 | Поле | Тип | Required |
 | --- | --- | --- |
 | `role_id` | `UUID` | `yes` |
-| `resource` | `str` | `yes` |
-| `action` | `str` | `yes` |
+| `permission_id` | `UUID` | `yes` |
 
 ## Read DTO
 
@@ -36,12 +35,11 @@ tags:
 
 | Поле | Тип | Required |
 | --- | --- | --- |
+| `id` | `UUID` | `yes` |
 | `role_id` | `UUID` | `yes` |
-| `resource` | `str` | `yes` |
-| `action` | `str` | `yes` |
-| `created_at` | `datetime` | `yes` |
-| `updated_at` | `datetime` | `yes` |
+| `permission_id` | `UUID` | `yes` |
 | `role` | `object{id: UUID, name: str | None, code: str | None} | None` | `no` |
+| `permission` | `object{id: UUID, name: str | None, code: str | None} | None` | `no` |
 
 ## ListRead DTO
 
@@ -49,12 +47,11 @@ tags:
 
 | Поле | Тип | Required |
 | --- | --- | --- |
+| `id` | `UUID` | `yes` |
 | `role_id` | `UUID` | `yes` |
-| `resource` | `str` | `yes` |
-| `action` | `str` | `yes` |
-| `created_at` | `datetime` | `yes` |
-| `updated_at` | `datetime` | `yes` |
+| `permission_id` | `UUID` | `yes` |
 | `role` | `object{id: UUID, name: str | None, code: str | None} | None` | `no` |
+| `permission` | `object{id: UUID, name: str | None, code: str | None} | None` | `no` |
 
 ## Update DTO
 
@@ -63,8 +60,7 @@ tags:
 | Поле | Тип | Required |
 | --- | --- | --- |
 | `role_id` | `UUID | None` | `no` |
-| `resource` | `str | None` | `no` |
-| `action` | `str | None` | `no` |
+| `permission_id` | `UUID | None` | `no` |
 
 ## Delete DTO
 
@@ -73,9 +69,7 @@ tags:
 | Поле | Тип | Required |
 | --- | --- | --- |
 | `reason` | `str | None` | `no` |
-| `role_id` | `UUID` | `yes` |
-| `resource` | `str` | `yes` |
-| `action` | `str` | `yes` |
+| `id` | `UUID` | `yes` |
 
 ## Envelope ответы
 
@@ -90,9 +84,10 @@ tags:
 Доступные include:
 
 - `role`
+- `permission`
 
 Пример запроса:
 
-- `GET /api/v1/role_permissions?include=role`
+- `GET /api/v1/role_permissions?include=role,permission`
 
 Если include содержит неподдерживаемое значение, API должен вернуть `422 application/problem+json` с `allowed_includes`.

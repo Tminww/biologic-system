@@ -22,6 +22,7 @@
 | objects | [data-model](./backend/data-model/entities/objects.md) | [dto](./backend/dto-contracts/entities/objects.md) |
 | protocol_types | [data-model](./backend/data-model/entities/protocol_types.md) | [dto](./backend/dto-contracts/entities/protocol_types.md) |
 | protocols | [data-model](./backend/data-model/entities/protocols.md) | [dto](./backend/dto-contracts/entities/protocols.md) |
+| permissions | [data-model](./backend/data-model/entities/permissions.md) | [dto](./backend/dto-contracts/entities/permissions.md) |
 | research_goals | [data-model](./backend/data-model/entities/research_goals.md) | [dto](./backend/dto-contracts/entities/research_goals.md) |
 | results | [data-model](./backend/data-model/entities/results.md) | [dto](./backend/dto-contracts/entities/results.md) |
 | role_permissions | [data-model](./backend/data-model/entities/role_permissions.md) | [dto](./backend/dto-contracts/entities/role_permissions.md) |
@@ -31,12 +32,12 @@
 | samples | [data-model](./backend/data-model/entities/samples.md) | [dto](./backend/dto-contracts/entities/samples.md) |
 | statuses | [data-model](./backend/data-model/entities/statuses.md) | [dto](./backend/dto-contracts/entities/statuses.md) |
 | tests | [data-model](./backend/data-model/entities/tests.md) | [dto](./backend/dto-contracts/entities/tests.md) |
-| user_roles | [data-model](./backend/data-model/entities/user_roles.md) | [dto](./backend/dto-contracts/entities/user_roles.md) |
+| user_scopes | [data-model](./backend/data-model/entities/user_scopes.md) | [dto](./backend/dto-contracts/entities/user_scopes.md) |
 | users | [data-model](./backend/data-model/entities/users.md) | [dto](./backend/dto-contracts/entities/users.md) |
 
 ## 3. Доменные блоки
 
-- Организация и доступ: `users`, `roles`, `role_permissions`, `user_roles`, `change_log`.
+- Организация и доступ: `users`, `roles`, `permissions`, `role_permissions`, `user_scopes`, `change_log`.
 - Структура лаборатории: `branches`, `labs`, `objects`, `doctors`.
 - Производственный поток: `directions`, `samples`, `sample_targets`, `results`, `tests`, `conclusions`, `protocols`.
 - Справочники: `statuses`, `conclusion_statuses`, `sample_types`, `research_goals`, `indicators`, `protocol_types`.

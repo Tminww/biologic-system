@@ -9,13 +9,10 @@ tags:
 
 ## Поля
 
+- `id (uuid, DEFAULT uuidv7())` — Уникальный идентификатор назначения разрешения роли.
+- `role_id (uuid, NOT NULL)` — Роль, которой назначено разрешение.
+- `permission_id (uuid, NOT NULL)` — Разрешение из таблицы `permissions`.
 
-- `role_id (uuid, NOT NULL, PK part)` — Роль, которой назначено разрешение.
-- `resource (text, NOT NULL, PK part)` — Ресурс (сущность или раздел), к которому применяется разрешение.
-- `action (text, NOT NULL, PK part)` — Действие над ресурсом (например: `read`, `create`, `update`, `delete`).
-- `created_by (uuid, NULL)` — Пользователь, создавший запись.
-- `updated_by (uuid, NULL)` — Пользователь, последним изменивший запись.
-- `created_at (timestamptz, NOT NULL, DEFAULT CURRENT_TIMESTAMP)` — Дата и время создания записи.
-- `updated_at (timestamptz, NOT NULL, DEFAULT CURRENT_TIMESTAMP)` — Дата и время последнего изменения записи.
-- `deleted_at (timestamptz, NULL)` — Дата и время мягкого удаления; `NULL` — запись активна.
+## Ограничения
 
+1. `UNIQUE (role_id, permission_id)`.

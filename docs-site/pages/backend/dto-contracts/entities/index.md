@@ -20,6 +20,7 @@ tags:
 - [`objects`](./objects.md)
 - [`protocol_types`](./protocol_types.md)
 - [`protocols`](./protocols.md)
+- [`permissions`](./permissions.md)
 - [`research_goals`](./research_goals.md)
 - [`results`](./results.md)
 - [`role_permissions`](./role_permissions.md)
@@ -29,7 +30,7 @@ tags:
 - [`samples`](./samples.md)
 - [`statuses`](./statuses.md)
 - [`tests`](./tests.md)
-- [`user_roles`](./user_roles.md)
+- [`user_scopes`](./user_scopes.md)
 - [`users`](./users.md)
 
 ## Include Whitelist (Read/List)
@@ -54,16 +55,17 @@ tags:
 | `objects` | `branch` |
 | `protocol_types` | `-` |
 | `protocols` | `conclusion`, `protocol_type` |
+| `permissions` | `-` |
 | `research_goals` | `lab` |
 | `results` | `lab`, `sample`, `status` |
-| `role_permissions` | `role` |
+| `role_permissions` | `role`, `permission` |
 | `roles` | `-` |
 | `sample_targets` | `research_goal`, `sample`, `status` |
 | `sample_types` | `-` |
 | `samples` | `direction`, `protocol`, `sample_type`, `status` |
 | `statuses` | `-` |
 | `tests` | `indicator`, `result`, `status` |
-| `user_roles` | `role`, `user` |
+| `user_scopes` | `user` |
 | `users` | `lab`, `role` |
 
 :::note

@@ -28,6 +28,7 @@ tags:
 | --- | --- | --- |
 | `key` | `str` | `yes` |
 | `name` | `str` | `yes` |
+| `scope_type` | `Literal['global','own_branch','own_lab','own_objects']` | `yes` |
 
 ## Read DTO
 
@@ -38,6 +39,7 @@ tags:
 | `id` | `UUID` | `yes` |
 | `key` | `str` | `yes` |
 | `name` | `str` | `yes` |
+| `scope_type` | `Literal['global','own_branch','own_lab','own_objects']` | `yes` |
 | `created_at` | `datetime` | `yes` |
 | `updated_at` | `datetime` | `yes` |
 
@@ -50,6 +52,7 @@ tags:
 | `id` | `UUID` | `yes` |
 | `key` | `str` | `yes` |
 | `name` | `str` | `yes` |
+| `scope_type` | `Literal['global','own_branch','own_lab','own_objects']` | `yes` |
 | `created_at` | `datetime` | `yes` |
 | `updated_at` | `datetime` | `yes` |
 
@@ -61,6 +64,7 @@ tags:
 | --- | --- | --- |
 | `key` | `str | None` | `no` |
 | `name` | `str | None` | `no` |
+| `scope_type` | `Literal['global','own_branch','own_lab','own_objects'] | None` | `no` |
 
 ## Delete DTO
 

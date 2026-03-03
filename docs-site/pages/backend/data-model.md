@@ -29,9 +29,12 @@ flowchart LR
   LB --> RES[results]
 
   RO[roles] --> US
-  US --> UR[user_roles]
-  RO --> UR
+  US --> USC[user_scopes]
+  BR -. scope_id .-> USC
+  LB -. scope_id .-> USC
+  OBJ -. scope_id .-> USC
   RO --> RP[role_permissions]
+  PM[permissions] --> RP
 
   ST[sample_types] --> IND
   ST --> SMP[samples]
@@ -73,6 +76,7 @@ flowchart LR
 | [`objects`](data-model/entities/objects.md) | Объекты |
 | [`protocol_types`](data-model/entities/protocol_types.md) | Типы протоколов |
 | [`protocols`](data-model/entities/protocols.md) | Протоколы |
+| [`permissions`](data-model/entities/permissions.md) | Каталог разрешений |
 | [`research_goals`](data-model/entities/research_goals.md) | Цели исследований |
 | [`results`](data-model/entities/results.md) | Результаты |
 | [`role_permissions`](data-model/entities/role_permissions.md) | Права ролей |
@@ -82,7 +86,7 @@ flowchart LR
 | [`samples`](data-model/entities/samples.md) | Пробы |
 | [`statuses`](data-model/entities/statuses.md) | Статусы |
 | [`tests`](data-model/entities/tests.md) | Испытания |
-| [`user_roles`](data-model/entities/user_roles.md) | Назначения ролей |
+| [`user_scopes`](data-model/entities/user_scopes.md) | Области доступа пользователей |
 | [`users`](data-model/entities/users.md) | Пользователи |
 
 :::note

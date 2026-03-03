@@ -45,7 +45,6 @@ services:
     environment:
       APP_DATABASE_URL: postgresql+asyncpg://biologic:biologic@biologic-dev-db:5432/biologic
       APP_ALEMBIC_DATABASE_URL: postgresql+asyncpg://biologic:biologic@biologic-dev-db:5432/biologic
-      APP_AUTH_MODE: "${APP_AUTH_MODE:-mock}"
     command: ["alembic", "upgrade", "head"]
 
   biologic-dev-api:
@@ -61,7 +60,6 @@ services:
     environment:
       APP_DATABASE_URL: postgresql+asyncpg://biologic:biologic@biologic-dev-db:5432/biologic
       APP_ALEMBIC_DATABASE_URL: postgresql+asyncpg://biologic:biologic@biologic-dev-db:5432/biologic
-      APP_AUTH_MODE: "${APP_AUTH_MODE:-mock}"
       WATCHFILES_FORCE_POLLING: "${WATCHFILES_FORCE_POLLING:-false}"
     volumes:
       - ./backend/src:/app/src:z

@@ -4,13 +4,7 @@
 
 - Проверьте, что frontend отправляет payload `username/password`
 - Проверьте, что backend доступен по `VITE_API_BASE_URL` и использует `HttpOnly` cookies
-- Для demo-режима включите `APP_AUTH_MODE=mock`
-
-Рабочие пары для backend mock:
-
-- `admin/admin123`
-- `doctor/doctor123`
-- `tech/tech123`
+- Проверьте, что выполнены миграции и в БД есть тестовый пользователь `admin/admin123`
 
 ## После смены ролей права не обновились
 

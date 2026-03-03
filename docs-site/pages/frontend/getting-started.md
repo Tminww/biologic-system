@@ -62,13 +62,11 @@ VITE_API_SUPPORTS_FILTERS=false
 npm run test:e2e
 ```
 
-## Тестовые учетные записи (backend mock auth)
+## Тестовые учетные записи backend
 
-Запустите backend с `APP_AUTH_MODE=mock`.
+После `alembic upgrade head` доступен пользователь:
 
 - `admin` / `admin123`
-- `doctor` / `doctor123`
-- `tech` / `tech123`
 
 ## Важные локальные ключи
 

@@ -61,13 +61,13 @@
 
 - `src/shared/types/permissions.ts`: добавить новый `Resource`
 - `src/shared/i18n/messages.ts`: добавить `resource.<name>` и связанные тексты
-- при необходимости добавить роль/override поведение в backend/mock
+- при необходимости добавить роль/override поведение в backend
 
 ## Шаг 7. Синхронизировать backend контракт
 
 - добавить/обновить endpoint'ы на backend по канону `/api/v1`
 - синхронизировать `resource/action` для RBAC в `/auth/me`
-- при необходимости добавить backend mock-данные, но не фронтовые моки
+- при необходимости добавить backend seed-данные, но не фронтовые моки
 
 ## Шаг 8. Добавить документацию и тесты
 

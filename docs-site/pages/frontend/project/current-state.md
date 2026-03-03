@@ -43,7 +43,7 @@ Protected:
 - `VITE_API_BASE_URL=https://...`
 - `VITE_API_PREFIX=/api/v1`
 - `credentials: 'include'`
-- Для demo auth backend поддерживает `APP_AUTH_MODE=mock`
+- Backend использует реальную auth-схему через БД (без mock-режима auth)
 
 ## Основные reusable-компоненты
 

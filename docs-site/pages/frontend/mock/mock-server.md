@@ -5,15 +5,10 @@ tags:
   - Mock
 ---
 
-# Backend Mock Auth
+# Backend Mock Notes
 
 Frontend не содержит локального mock API и не мокает auth.
-
-## Где включается
-
-Backend (`src/core/config.py`):
-
-- `APP_AUTH_MODE=mock`
+Backend использует только реальную auth-схему через БД.
 
 ## Что остается каноничным
 
@@ -23,16 +18,9 @@ Backend (`src/core/config.py`):
 - `POST /api/v1/auth/refresh`
 - `POST /api/v1/auth/logout`
 - frontend отправляет `credentials: 'include'`
-- `GET/POST/PUT/DELETE /api/v1/dashboard/quick-actions` в mock режиме с хранением in-memory по роли
-
-## Тестовые пользователи (backend mock)
-
-- `admin` / `admin123`
-- `doctor` / `doctor123`
-- `tech` / `tech123`
+- `GET/POST/PUT/DELETE /api/v1/dashboard/quick-actions` хранит данные in-memory по роли
 
 ## Ограничения
 
-- Mock только для auth слоя
 - Quick actions сохраняются только в памяти процесса backend и сбрасываются при перезапуске
-- Данные CRUD-эндпойнтов по-прежнему берутся из backend источников данных
+- Данные CRUD-эндпойнтов берутся из backend источников данных

@@ -65,15 +65,6 @@ Use URL hashes to open dialogs or the filters panel programmatically.
 - Filters panel with preset: `/objects#filters=My%20Preset`
 - Legacy dialog hashes still work: `/objects#edit-123`, `/objects#edit:123`
 
-## Backend Mock Auth Mode
-
-Frontend does not contain local API/auth mocks.  
-For demo auth via backend JWT cookies, run backend with `APP_AUTH_MODE=mock` and use:
-
-- `admin` / `admin123`
-- `doctor` / `doctor123`
-- `tech` / `tech123`
-
 ## Adding a New CRUD Module
 
 1. Create an API module in `src/modules/<module>/<module>.api.ts` using the shared API client.

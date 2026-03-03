@@ -36,7 +36,6 @@ services:
     environment:
       APP_DATABASE_URL: postgresql+asyncpg://biologic:biologic@biologic-db:5432/biologic
       APP_ALEMBIC_DATABASE_URL: postgresql+asyncpg://biologic:biologic@biologic-db:5432/biologic
-      APP_AUTH_MODE: "${APP_AUTH_MODE:-mock}"
     command: ["alembic", "upgrade", "head"]
 
   biologic-api:
@@ -53,7 +52,6 @@ services:
     environment:
       APP_DATABASE_URL: postgresql+asyncpg://biologic:biologic@biologic-db:5432/biologic
       APP_ALEMBIC_DATABASE_URL: postgresql+asyncpg://biologic:biologic@biologic-db:5432/biologic
-      APP_AUTH_MODE: "${APP_AUTH_MODE:-mock}"
     depends_on:
       biologic-db:
         condition: service_healthy

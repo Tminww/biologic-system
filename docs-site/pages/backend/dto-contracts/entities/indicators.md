@@ -32,7 +32,7 @@ tags:
 | `norm_value` | `str | None` | `no` |
 | `default_text` | `str | None` | `no` |
 | `comment` | `str | None` | `no` |
-| `lab_id` | `UUID | None` | `no` |
+| `research_goal_id` | `UUID | None` | `no` |
 | `sample_type_id` | `UUID | None` | `no` |
 
 ## Read DTO
@@ -48,11 +48,11 @@ tags:
 | `norm_value` | `str | None` | `no` |
 | `default_text` | `str | None` | `no` |
 | `comment` | `str | None` | `no` |
-| `lab_id` | `UUID | None` | `no` |
+| `research_goal_id` | `UUID | None` | `no` |
 | `sample_type_id` | `UUID | None` | `no` |
 | `created_at` | `datetime` | `yes` |
 | `updated_at` | `datetime` | `yes` |
-| `lab` | `object{id: UUID, name: str | None, code: str | None} | None` | `no` |
+| `research_goal` | `object{id: UUID, name: str | None, code: str | None} | None` | `no` |
 | `sample_type` | `object{id: UUID, name: str | None, code: str | None} | None` | `no` |
 
 ## ListRead DTO
@@ -68,11 +68,11 @@ tags:
 | `norm_value` | `str | None` | `no` |
 | `default_text` | `str | None` | `no` |
 | `comment` | `str | None` | `no` |
-| `lab_id` | `UUID | None` | `no` |
+| `research_goal_id` | `UUID | None` | `no` |
 | `sample_type_id` | `UUID | None` | `no` |
 | `created_at` | `datetime` | `yes` |
 | `updated_at` | `datetime` | `yes` |
-| `lab` | `object{id: UUID, name: str | None, code: str | None} | None` | `no` |
+| `research_goal` | `object{id: UUID, name: str | None, code: str | None} | None` | `no` |
 | `sample_type` | `object{id: UUID, name: str | None, code: str | None} | None` | `no` |
 
 ## Update DTO
@@ -87,7 +87,7 @@ tags:
 | `norm_value` | `str | None` | `no` |
 | `default_text` | `str | None` | `no` |
 | `comment` | `str | None` | `no` |
-| `lab_id` | `UUID | None` | `no` |
+| `research_goal_id` | `UUID | None` | `no` |
 | `sample_type_id` | `UUID | None` | `no` |
 
 ## Delete DTO
@@ -111,11 +111,11 @@ tags:
 
 Доступные include:
 
-- `lab`
+- `research_goal`
 - `sample_type`
 
 Пример запроса:
 
-- `GET /api/v1/indicators?include=lab,sample_type`
+- `GET /api/v1/indicators?include=research_goal,sample_type`
 
 Если include содержит неподдерживаемое значение, API должен вернуть `422 application/problem+json` с `allowed_includes`.

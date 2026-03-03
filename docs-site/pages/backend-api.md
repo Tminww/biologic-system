@@ -51,7 +51,18 @@ tags:
 - `user_scopes`
 - `users`
 
-## 3. Команды исследований
+## 3. Auth endpoints
+
+`auth` не входит в CRUD-матрицу, так как это сессионные команды.
+
+| Method | Path | Назначение |
+| --- | --- | --- |
+| POST | `/api/v1/auth/login` | Логин, установка `HttpOnly` access/refresh cookies |
+| GET | `/api/v1/auth/me` | Получение текущей сессии (пользователь + эффективные permissions) |
+| POST | `/api/v1/auth/refresh` | Ротация access/refresh токенов по refresh cookie |
+| POST | `/api/v1/auth/logout` | Инвалидация refresh-токена и очистка cookies |
+
+## 4. Команды исследований
 
 | Method | Path | Инициатор | Эффект |
 | --- | --- | --- | --- |
@@ -59,7 +70,7 @@ tags:
 | POST | `/api/v1/research/{id}/start` | Доктор | Статус `ordered` → `in_progress` |
 | POST | `/api/v1/research/{id}/reject` | НЛ / Доктор / Регистратор | Статус → `rejected` |
 
-## 4. Матрица frontend route → backend resource
+## 5. Матрица frontend route → backend resource
 
 | Frontend route | Backend resource |
 | --- | --- |

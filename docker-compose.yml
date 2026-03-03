@@ -38,7 +38,6 @@ services:
       context: ./backend
       dockerfile: Dockerfile
       target: prod
-    image: biologic-prod-api:latest
     depends_on:
       biologic-dev-db:
         condition: service_healthy
@@ -53,7 +52,6 @@ services:
       context: ./backend
       dockerfile: Dockerfile
       target: dev
-    image: biologic-dev-api:latest
     restart: unless-stopped
     ports:
       - "127.0.0.1:8080:8080"
@@ -91,7 +89,6 @@ services:
       context: ./frontend
       dockerfile: Dockerfile
       target: dev
-    image: biologic-dev-frontend:latest
     restart: unless-stopped
     ports:
       - "127.0.0.1:5173:5173"
@@ -113,7 +110,6 @@ services:
       context: ./docs-site
       dockerfile: Dockerfile
       target: dev
-    image: biologic-dev-docs:latest
     restart: unless-stopped
     ports:
       - "127.0.0.1:3000:3000"

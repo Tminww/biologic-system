@@ -20,6 +20,22 @@ tags:
 4. `PATCH /api/v1/change_log/{id}`
 5. `DELETE /api/v1/change_log/{id}`
 
+## Семантика `action`
+
+`change_log` используется как технический аудит и журнал истории изменений.
+
+Рекомендуемые значения:
+
+- `CREATE`
+- `UPDATE`
+- `DELETE`
+- `RESTORE`
+- `STATUS_TRANSITION`
+
+:::note
+`STATUS_TRANSITION` обязателен для переходов статусов у `directions`, `samples`, `research`, `tests`.
+:::
+
 ## Create DTO
 
 Модель: `ChangeLogCreateDTO`
@@ -89,6 +105,27 @@ tags:
 | `actor_name` | `str | None` | `no` |
 | `snapshot` | `dict[str, Any] | None` | `no` |
 | `diff` | `dict[str, Any] | None` | `no` |
+
+## Формат `diff` для `STATUS_TRANSITION`
+
+```json
+{
+  "field": "status_id",
+  "from_code": "pending",
+  "to_code": "rejected",
+  "entity_type": "sample",
+  "reason": "sample_rejected",
+  "triggered_by_role": "registrar"
+}
+```
+
+Для обычного обновления `diff` остаётся в формате:
+
+```json
+{
+  "field_name": ["old_value", "new_value"]
+}
+```
 
 ## Delete DTO
 

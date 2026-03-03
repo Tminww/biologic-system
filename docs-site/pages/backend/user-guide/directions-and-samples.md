@@ -35,3 +35,10 @@ tags:
 1. Отсутствуют пустые обязательные поля.
 2. Корректно выставлены даты приема и статусы.
 3. Нет дубликатов направлений или образцов.
+
+## Регламент статусов
+
+- Направления: [direction_statuses](../../data-model/entities/direction_statuses.md)
+- Образцы: [sample_statuses](../../data-model/entities/sample_statuses.md)
+- Исследования: [research_statuses](../../data-model/entities/research_statuses.md)
+- Испытания: [test_statuses](../../data-model/entities/test_statuses.md)

@@ -152,6 +152,7 @@ const config: ZudokuConfig = {
         { type: "doc", file: "frontend/index", label: "Обзор Frontend" },
         { type: "doc", file: "frontend/getting-started", label: "Быстрый старт" },
         { type: "doc", file: "frontend/project/current-state", label: "Текущее состояние" },
+        { type: "doc", file: "frontend/project/frontend-new-module-migration", label: "frontend-new Migration" },
         { type: "doc", file: "frontend/api-spec", label: "API Spec" },
         {
           type: "category",
@@ -172,6 +173,14 @@ const config: ZudokuConfig = {
             { type: "doc", file: "frontend/modules/objects", label: "Objects" },
             { type: "doc", file: "frontend/modules/roles-and-permissions", label: "Roles and Permissions" },
             { type: "doc", file: "frontend/modules/admin-users", label: "Admin Users" },
+          ],
+        },
+        {
+          type: "category",
+          label: "ADR",
+          items: [
+            { type: "doc", file: "frontend/adr/index", label: "Обзор" },
+            { type: "doc", file: "frontend/adr/ADR-0001-module-first-explicit-router", label: "ADR-0001" },
           ],
         },
         {

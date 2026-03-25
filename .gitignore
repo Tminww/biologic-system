@@ -19,9 +19,12 @@ coverage/
 
 # Environment
 .env
-.env.*
-!.env.example
 
+# Auto-generated type declarations
+auto-imports.d.ts
+components.d.ts
+tsconfig.app.tsbuildinfo
+tsconfig.node.tsbuildinfo
 # Created by https://www.toptal.com/developers/gitignore/api/python
 # Edit at https://www.toptal.com/developers/gitignore?templates=python
 
@@ -52,9 +55,6 @@ coverage/
 npm-debug.log*
 yarn-debug.log*
 yarn-error.log*
-
-# env files (can opt-in for commiting if needed)
-.env*
 
 # typescript
 *.tsbuildinfo
@@ -183,8 +183,7 @@ celerybeat.pid
 # SageMath parsed files
 *.sage.py
 
-# Environments
-.env
+
 .venv
 env/
 venv/
